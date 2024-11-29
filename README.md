@@ -116,25 +116,22 @@ css复制代码[输入文件] --> [读取命令]
 ### 5.2 单元测试示例
 
 ```
-java复制代码import static org.junit.Assert.*;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class DataParserTest {
-
+//  测试命令 `players` 输出格式
     @Test
-    public void testGetAllPlayers() throws Exception {
-        DataParser dataParser = new DataParser();
-        List<Player> players = dataParser.getAllPlayers();
-        assertNotNull(players);
-        assertFalse(players.isEmpty());
+    void testProcessCommand_players() throws IOException {
+        String expected = "Full Name:HART Alexander\nGender:Male\nCountry:Austria\n-----\n";
+        String result = coreModule.processCommand("players");
+        assertEquals(expected, result);
     }
-
+//  测试无效命令处理
     @Test
-    public void testGetEventResult() throws Exception {
-        DataParser dataParser = new DataParser();
-        List<ContestDetailed> results = dataParser.getEventResult("women 1m springboard");
-        assertNotNull(results);
-        assertTrue(results.size() > 0);
+    void testProcessCommand_invalidCommand() {
+        String result = coreModule.processCommand("invalid command");
+        assertEquals("Error: Invalid command", result);
     }
 }
 ```
